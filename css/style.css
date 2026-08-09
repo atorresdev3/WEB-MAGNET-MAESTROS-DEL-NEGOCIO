@@ -1235,17 +1235,9 @@
     animation: pageTurnIn 0.7s ease-out forwards;
 }
 @keyframes pageTurnIn {
-    0% {
-        transform: rotateY(80deg);
-        opacity: 0;
-    }
-    55% {
-        opacity: 1;
-    }
-    100% {
-        transform: rotateY(0deg);
-        opacity: 1;
-    }
+    0%   { transform: perspective(1800px) rotateY(80deg); opacity: 0.01; }
+    55%  { opacity: 1; }
+    100% { transform: perspective(1800px) rotateY(0deg); opacity: 1; }
 }
 
 .screen {
