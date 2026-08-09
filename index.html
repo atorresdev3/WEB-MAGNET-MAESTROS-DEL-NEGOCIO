@@ -6,6 +6,7 @@
         <title>Document</title>
         <link rel="stylesheet" href="css/style.css" />
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link rel="preload" as="image" href="img/portada.webp" fetchpriority="high">
     </head>
     <body class="bg-[#000101] text-[#F3BD68] font-sans min-h-screen overflow-x-hidden">
         <!-- ===== FONDO DE ESTRELLAS (todas las pantallas menos el roadmap) ===== -->
@@ -18,7 +19,7 @@
         <!-- ===== PANTALLA 1: PORTADA (efecto abrir libro) — fuera del contenedor de perspectiva ===== -->
         <div id="splash-perspective">
             <div id="book-cover">
-                <img src="img/portada.webp" alt="Portada del libro" />
+                <img src="img/portada.webp" alt="Portada del libro" fetchpriority="high" decoding="async" />
             </div>
             <div id="splash-backdrop"></div>
         </div>
