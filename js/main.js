@@ -369,21 +369,22 @@ screenNext.addEventListener("scroll", () => {
 });
 
 // ===== AJUSTE DINÁMICO DE LA PORTADA SEGÚN LA PANTALLA REAL =====
+// ===== AJUSTE DINÁMICO DE LA PORTADA SEGÚN LA PANTALLA REAL =====
 function adjustCoverImage() {
-    const img = document.querySelector("#book-cover img");
-    if (!img || !img.naturalWidth) return;
+    if (!coverImg || !coverImg.naturalWidth) return;
 
     const screenRatio = window.innerWidth / window.innerHeight;
-    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const imgRatio = coverImg.naturalWidth / coverImg.naturalHeight;
 
     // Si la pantalla es relativamente más ancha que la imagen, "cover" recortaría el pie de portada
-    img.style.objectFit = screenRatio > imgRatio ? "contain" : "cover";
+    coverImg.style.objectFit = screenRatio > imgRatio ? "contain" : "cover";
 }
 
-const coverImg = document.querySelector("#book-cover img");
-if (coverImg.complete) {
-    adjustCoverImage();
-} else {
-    coverImg.addEventListener("load", adjustCoverImage);
+if (coverImg) {
+    if (coverImg.complete) {
+        adjustCoverImage();
+    } else {
+        coverImg.addEventListener("load", adjustCoverImage);
+    }
 }
 window.addEventListener("resize", adjustCoverImage);
