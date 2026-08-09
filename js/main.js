@@ -40,41 +40,47 @@ const starsBg = document.getElementById("stars-bg");
 
 // Cuando termina la animación del libro (3.2s delay + 1s giro = 4.2s), pasamos a bienvenida
 const bookCover = document.getElementById("book-cover");
-const coverImg = bookCover.querySelector("img");
+const coverImg = bookCover ? bookCover.querySelector("img") : null;
 
-let imgLoaded = coverImg.complete && coverImg.naturalWidth > 0;
+let flipStarted = false;
+
+function startSplashFlip() {
+    if (flipStarted) return;
+    flipStarted = true;
+    if (bookCover) bookCover.classList.add("start-flip");
+    setTimeout(() => {
+        splash.style.display = "none";
+        goToScreen(null, screenWelcome);
+    }, 1000);
+}
+
+let imgLoaded = !coverImg || (coverImg.complete && coverImg.naturalWidth > 0);
 let minTimePassed = false;
 
 function maybeStartFlip() {
     if (imgLoaded && minTimePassed) {
-        bookCover.classList.add("start-flip");
-        setTimeout(() => {
-            splash.style.display = "none";
-            goToScreen(null, screenWelcome);
-        }, 1000); // debe coincidir con la duración del giro (1s)
+        startSplashFlip();
     }
 }
 
-if (!imgLoaded) {
+if (coverImg && !imgLoaded) {
     coverImg.addEventListener("load", () => {
+        imgLoaded = true;
+        maybeStartFlip();
+    });
+    coverImg.addEventListener("error", () => {
         imgLoaded = true;
         maybeStartFlip();
     });
 }
 
-// Tiempo mínimo que la portada se queda quieta antes de poder girar
 setTimeout(() => {
     minTimePassed = true;
     maybeStartFlip();
 }, 2000);
 
-// Seguro: si la imagen tarda demasiado o falla, avanza igual a los 6s para no dejar a nadie trabado
-setTimeout(() => {
-    if (!imgLoaded) {
-        imgLoaded = true;
-        maybeStartFlip();
-    }
-}, 6000);
+// SEGURO ABSOLUTO: pase lo que pase, a los 5s se fuerza el avance sí o sí
+setTimeout(startSplashFlip, 5000);
 
 // ===== EFECTO DE TEXTO ANIMADO LETRA POR LETRA =====
 function renderAnimatedText(el, text) {
