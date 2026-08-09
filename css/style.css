@@ -1098,8 +1098,11 @@
     height: 100%;
     transform-origin: left center;
     transform-style: preserve-3d;
-    animation: bookOpen 1s ease-in 2s forwards;
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+}
+
+#book-cover.start-flip {
+    animation: bookOpen 1s ease-in forwards;
 }
 
 #book-cover img {
